@@ -1,0 +1,5 @@
+/.idea/
+/test/
+__pycache__
+/app/config/secure.py
+test.py
