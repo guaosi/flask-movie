@@ -1,4 +1,8 @@
 from flask import Flask
+
+from app.models.base import db
+
+
 def create_app():
     app=Flask(__name__)
     app.config.from_object('app.config.secure')
@@ -12,4 +16,7 @@ def register_blueprint(app):
     app.register_blueprint(r1())
     app.register_blueprint(r2())
 def register_db(app):
-    pass
+    # 注册SQLAlchemy
+    db.init_app(app)
+    # with app.app_context()
+    db.create_all(app=app)
