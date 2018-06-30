@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_wtf.csrf import CSRFProtect
+from jinja2 import Environment
 
 from app.models.base import db
 
@@ -9,6 +11,8 @@ def create_app():
     app.config.from_object('app.config.setting')
     register_blueprint(app)
     register_db(app)
+    # csrf保护
+    CSRFProtect(app)
     return app
 def register_blueprint(app):
     from app.home import create_home_blueprint as r1

@@ -1,0 +1,3 @@
+# 后台标签页列表
+ADMIN_TAG_PAGE=5
+UPLOADED_IMAGES_DEST = 'static'

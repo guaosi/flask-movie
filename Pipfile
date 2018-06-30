@@ -8,6 +8,8 @@ flask = "*"
 flask-sqlalchemy = "*"
 cymysql = "*"
 flask-login = "*"
+flask-wtf = "*"
+flask-uploads = "*"
 
 [dev-packages]
 

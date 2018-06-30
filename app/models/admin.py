@@ -1,14 +1,13 @@
 from sqlalchemy import Column, Integer, String, Text, SmallInteger
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from app.libs.enum import AdminTypeEnum
 from app.models.base import BaseModel
 # 管理员
 class Admin(BaseModel):
     id=Column(Integer,primary_key=True,autoincrement=True) #id
     name=Column(String(100),unique=True) #管理员账号
-    _pwd=Column('pwd',String(256)) #管理员密码
+    _pwd=Column('pwd',String(150)) #管理员密码
     _is_super=Column('is_super',SmallInteger) #是否为超级管理员 0为超级管理员
     role=relationship('Role',backref='admin')
     adminlog=relationship('Adminlog',backref='admin')

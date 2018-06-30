@@ -1,6 +1,9 @@
 from flask import Blueprint
 from app.admin import main,auth,tag,preview,movie,user,moviecol,comment,log,admin,role
+
+
 def create_admin_blueprint():
+
     bp=Blueprint('admin',__name__)
     main.app.register(bp,url_prefix='/admin')
     auth.app.register(bp,url_prefix='/admin')

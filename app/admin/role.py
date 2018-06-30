@@ -10,4 +10,5 @@ def role_add():
 @app.route('/role/list')
 @admin_login_required
 def role_list():
+
     return render_template('admin/role_list.html')

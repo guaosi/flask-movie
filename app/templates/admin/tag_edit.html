@@ -4,7 +4,7 @@
     <h1>微电影管理系统</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 标签管理</a></li>
-        <li class="active">添加标签</li>
+        <li class="active">修改标签</li>
     </ol>
 </section>
 <section class="content" id="showcontent">
@@ -19,7 +19,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="input_name">标签名称</label>
-                            <input type="text" class="form-control" id="input_name" placeholder="请输入标签名称！" name="name">
+                            <input type="text" class="form-control" id="input_name" placeholder="请输入标签名称！" name="name" value="{{tag.name}}">
                         </div>
                         {% for err in form.name.errors %}
                         <div class="col-md-12">
@@ -29,7 +29,7 @@
                     </div>
                     <div class="box-footer">
                         {{form.csrf_token}}
-                        <button type="submit" class="btn btn-primary">添加</button>
+                        <button type="submit" class="btn btn-primary">修改</button>
                     </div>
                 </form>
             </div>
