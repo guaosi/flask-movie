@@ -1,8 +1,7 @@
 import datetime
-
-from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
 from contextlib import contextmanager
 
+from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy
 from sqlalchemy import Column
 
 
@@ -25,4 +24,4 @@ class BaseModel(db.Model):
             if hasattr(self,key) and key!='id':
                 setattr(self,key,value)
     def __init__(self):
-        self.addtime=datetime.now
+        self.addtime=datetime.datetime.now()
