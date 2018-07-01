@@ -13,8 +13,8 @@ class User(BaseModel):
     info=Column(Text) #个人简介
     face=Column(String(150),unique=True) #头像
     uuid=Column(String(150),unique=True) #唯一标志符
-    userlog=relationship('Userlog')
-    moviecol=relationship('MovieCol')
+    userlog=relationship('Userlog',backref='user')
+    moviecol=relationship('MovieCol',backref='user')
     comment=relationship('Comment',backref='user')
     @property
     def pwd(self):

@@ -1,7 +1,5 @@
 from flask import Flask
 from flask_wtf.csrf import CSRFProtect
-from jinja2 import Environment
-
 from app.models.base import db
 
 

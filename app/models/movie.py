@@ -16,3 +16,4 @@ class Movie(BaseModel):
     release_time=Column(Date) #上映时间
     length=Column(String(100)) #播放时长
     comment=relationship('Comment',backref='movie')
+    moviecol=relationship('MovieCol',backref='movie')

@@ -14,18 +14,29 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">修改密码</h3>
                 </div>
-                <form role="form">
+                <form role="form" method="post">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="input_pwd">旧密码</label>
-                            <input type="password" class="form-control" id="input_pwd" placeholder="请输入旧密码！">
+                            <input type="password" class="form-control" id="input_pwd" placeholder="请输入旧密码！" name="oldpwd">
+                             {% for err in form.oldpwd.errors %}
+                              <div class="col-md-12">
+                                <span style="color:red">{{ err }}</span>
+                             </div>
+                            {% endfor %}
                         </div>
                         <div class="form-group">
                             <label for="input_newpwd">新密码</label>
-                            <input type="password" class="form-control" id="input_newpwd" placeholder="请输入新密码！">
+                            <input type="password" class="form-control" id="input_newpwd" placeholder="请输入新密码！" name="newpwd">
+                              {% for err in form.newpwd.errors %}
+                              <div class="col-md-12">
+                                <span style="color:red">{{ err }}</span>
+                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="box-footer">
+                        {{ form.csrf_token }}
                         <button type="submit" class="btn btn-primary">修改</button>
                     </div>
                 </form>

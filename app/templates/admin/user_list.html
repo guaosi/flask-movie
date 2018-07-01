@@ -1,4 +1,5 @@
 {% extends  'admin/layout.html' %}
+{% import 'common/page.html' as pg %}
 {% block content %}
         <section class="content-header">
             <h1>微电影管理系统</h1>
@@ -26,6 +27,7 @@
                             </div>
                         </div>
                         <div class="box-body table-responsive no-padding">
+                        {% include 'admin/flash_msg.html' %}
                             <table class="table table-hover">
                                 <tbody>
                                 <tr>
@@ -34,29 +36,22 @@
                                     <th>邮箱</th>
                                     <th>手机</th>
                                     <th>头像</th>
-                                    <th>状态</th>
                                     <th>注册时间</th>
                                     <th>操作事项</th>
                                 </tr>
-                                {% for v in range(1,11) %}
+                                {% for user in users.items %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>拓荒者</td>
-                                    <td>1780316635@qq.com</td>
-                                    <td>13700632835</td>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.phone }}</td>
                                     <td>
-                                        <img data-src="holder.js/50x50" class="img-responsive center-block" alt="">
+                                        <img style="width: 50px" data-src="holder.js/50x50" class="img-responsive center-block" alt="" src="{{ url_for('static',filename=user.face) }}">
                                     </td>
-                                    <td>正常/冻结</td>
-                                    <td>2017-06-01 12:00:00</td>
+                                    <td>{{ user.addtime }}</td>
                                     <td>
-                                        <a class="label label-success" href="{{url_for('admin.user_view')}}">查看</a>
-                                        &nbsp;
-                                        <a class="label label-info">解冻</a>
-                                        &nbsp;
-                                        <a class="label label-warning">冻结</a>
-                                        &nbsp;
-                                        <a class="label label-danger">删除</a>
+                                        <a class="label label-success" href="{{url_for('admin.user_view',id=user.id)}}">查看</a>&nbsp;
+                                        <a href="{{url_for('admin.user_del',id=user.id)}}" class="label label-danger">删除</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -64,15 +59,7 @@
                             </table>
                         </div>
                         <div class="box-footer clearfix">
-                            <ul class="pagination pagination-sm no-margin pull-right">
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li><a href="#">尾页</a></li>
-                            </ul>
+                           {{ pg.render_pagination(users,'admin.user_list') }}
                         </div>
                     </div>
                 </div>

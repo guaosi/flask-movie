@@ -18,7 +18,7 @@
         <a href=""><b>微电影管理系统</b></a>
     </div>
     <div class="login-box-body">
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(category_filter=["err"]) %}
             {% for message in messages %}
                 {% if message %}
                  <p class="login-box-msg"  style="color:red">
@@ -27,7 +27,15 @@
                 {% endif %}
             {% endfor %}
         {% endwith %}
-
+        {% with messages = get_flashed_messages(category_filter=["ok"]) %}
+            {% for message in messages %}
+                {% if message %}
+                 <p class="login-box-msg"  style="color:green">
+                     {{message}}
+                 </p>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
 
         <form action="" method="post" id="form-data">
             <div class="form-group has-feedback">
