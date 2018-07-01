@@ -20,7 +20,7 @@ class BaseModel(db.Model):
     addtime=Column(db.DateTime,index=True)
     #1
     def set_attr(self,attrs):
-        for key,value in attrs.item():
+        for key,value in attrs.items():
             if hasattr(self,key) and key!='id':
                 setattr(self,key,value)
     def __init__(self):
