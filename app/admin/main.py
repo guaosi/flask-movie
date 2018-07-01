@@ -23,7 +23,9 @@ def login():
     if request.method=='POST' and form.validate():
         admin=Admin.query.filter_by(name=form.name.data).first()
         if admin and admin.check_hash_pwd(form.pwd.data):
-            session['admin']=form.name.data
+            session['admin']=admin.name
+            session['admin_id']=admin.id
+            Adminlog(admin.id)
             url=request.args.get('next')
             if url is None:
                 url=url_for('admin.index')
@@ -45,6 +47,7 @@ def pwd():
         with db.auto_commit():
             admin.pwd=form.newpwd.data
             db.session.add(admin)
+            Oplog('修改密码:' + admin.name + ',id:' + str(admin.id))
             flash('密码修改成功,请重新登陆','ok')
             return redirect(url_for('admin.logout'))
     return render_template('admin/pwd.html',form=form)

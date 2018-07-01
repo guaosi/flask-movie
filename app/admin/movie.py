@@ -6,6 +6,7 @@ from app.libs.login import admin_login_required
 from app.libs.redprint import RedPrint
 from app.libs.upload import Upload_file
 from app.models.movie import Movie
+from app.models.oplog import Oplog
 from app.validators.movie import MovieAddForm, MovieEditForm
 from app.models.comment import Comment
 from app.models.tag import Tag
@@ -34,6 +35,7 @@ def movie_add():
             movie=Movie()
             movie.set_attr(values)
             db.session.add(movie)
+            Oplog('添加电影:' + movie.title)
             flash('电影添加成功~','ok')
             return redirect(url_for('admin.movie_add'))
     return render_template('admin/movie_add.html',tags=tags,form=form)
@@ -50,6 +52,7 @@ def movie_del(id):
     movie=Movie.query.get_or_404(id)
     with db.auto_commit():
         db.session.delete(movie)
+        Oplog('删除电影:' + movie.title + ',id:' + str(movie.id))
         flash('电影成功删除~','ok')
         return redirect(url_for('admin.movie_list',page=1))
 
@@ -81,6 +84,7 @@ def movie_edit(id):
             # 一键修改属性
             movie.set_attr(data)
             db.session.add(movie)
+            Oplog('修改电影:' + movie.title + ',id:' + str(movie.id))
             flash('电影修改成功~','ok')
             return redirect(url_for('admin.movie_edit',id=id))
     tags = Tag.query.all()

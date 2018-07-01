@@ -3,6 +3,7 @@ from flask import render_template, request, flash, current_app, redirect, url_fo
 from app import db
 from app.libs.login import admin_login_required
 from app.libs.redprint import RedPrint
+from app.models.oplog import Oplog
 from app.models.tag import Tag
 from app.validators.tag import TagForm
 
@@ -16,6 +17,7 @@ def tag_add():
             tag=Tag()
             tag.name=form.name.data
             db.session.add(tag)
+            Oplog('添加标签:'+tag.name)
         flash('添加标签成功~','ok')
     return render_template('admin/tag_add.html',form=form)
 @app.route('/tag/list/<int:page>')
@@ -32,6 +34,7 @@ def tag_del(id):
     tag=Tag.query.get_or_404(id)
     with db.auto_commit():
         db.session.delete(tag)
+        Oplog('删除标签:' + tag.name+',id:'+str(tag.id))
         flash('标签删除成功~','ok')
     return redirect(url_for('admin.tag_list',page=1))
 
@@ -44,5 +47,6 @@ def tag_edit(id):
         with db.auto_commit():
             tag.name=form.name.data
             db.session.add(tag)
+            Oplog('修改标签:' + tag.name + ',id:' + str(tag.id))
             flash('标签修改成功~','ok')
     return render_template('admin/tag_edit.html',form=form,tag=tag,id=id)

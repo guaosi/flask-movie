@@ -4,6 +4,7 @@ from app import db
 from app.libs.login import admin_login_required
 from app.libs.redprint import RedPrint
 from app.models.moviecol import MovieCol
+from app.models.oplog import Oplog
 
 app=RedPrint()
 @app.route('/moviecol/list/<int:page>')
@@ -19,5 +20,6 @@ def moviecol_del(id):
     moviecol=MovieCol.query.get_or_404(id)
     with db.auto_commit():
         db.session.delete(moviecol)
+        Oplog('删除电影收藏:' + moviecol.movie.title + ',id:' + str(moviecol.id))
         flash('电影收藏删除成功~','ok')
         return redirect(url_for('admin.moviecol_list',page=1))

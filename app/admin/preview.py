@@ -5,6 +5,7 @@ from app import db
 from app.libs.login import admin_login_required
 from app.libs.redprint import RedPrint
 from app.libs.upload import Upload_file
+from app.models.oplog import Oplog
 from app.models.preview import Preview
 from app.validators.preview import PreviewAddForm, PreviewEditForm
 
@@ -23,6 +24,7 @@ def preview_add():
             preview=Preview()
             preview.set_attr(data)
             db.session.add(preview)
+            Oplog('添加预告:' + preview.title)
             flash('预告添加成功~','ok')
             return redirect(url_for('admin.preview_add'))
     return render_template('admin/preview_add.html',form=form)
@@ -40,6 +42,7 @@ def preview_del(id):
     preview=Preview.query.get_or_404(id)
     with db.auto_commit():
         db.session.delete(preview)
+        Oplog('删除预告:' + preview.name + ',id:' + str(preview.id))
         flash('预告删除成功~','ok')
         return redirect(url_for('admin.preview_list',page=1))
 
@@ -60,5 +63,6 @@ def preview_edit(id):
         with db.auto_commit():
             preview.set_attr(data)
             db.session.add(preview)
+            Oplog('修改预告:' + preview.name + ',id:' + str(preview.id))
             flash('预告修改成功~','ok')
     return render_template('admin/preview_edit.html',preview=preview,form=form)

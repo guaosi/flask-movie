@@ -1,10 +1,14 @@
+import datetime
 from flask import Blueprint
 from app.admin import main,auth,tag,preview,movie,user,moviecol,comment,log,admin,role
-
-
+bp=Blueprint('admin',__name__)
+@bp.context_processor
+def tel_extra():
+    data=dict(
+        online_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    )
+    return data
 def create_admin_blueprint():
-
-    bp=Blueprint('admin',__name__)
     main.app.register(bp,url_prefix='/admin')
     auth.app.register(bp,url_prefix='/admin')
     tag.app.register(bp,url_prefix='/admin')

@@ -2,6 +2,7 @@ from flask import render_template, current_app, redirect, url_for, flash
 from app import db
 from app.libs.login import admin_login_required
 from app.libs.redprint import RedPrint
+from app.models.oplog import Oplog
 from app.models.user import User
 from app.models.userlog import Userlog
 from app.models.moviecol import MovieCol
@@ -28,6 +29,7 @@ def user_del(id):
     user=User.query.get_or_404(id)
     with db.auto_commit():
         db.session.delete(user)
+        Oplog('删除用户:' + user.name + ',id:' + str(user.id))
         flash('会员删除成功~','ok')
         return redirect(url_for('admin.user_list',page=1))
 
