@@ -3,4 +3,4 @@
 __pycache__
 /app/config/secure.py
 test.py
-/app/static/static
+/app/static/uploads
