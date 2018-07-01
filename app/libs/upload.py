@@ -14,7 +14,7 @@ class Upload_file:
     def image(self,file):
         self.__upload_prex=current_app.config['UPLOADED_DIR']+'/image/'
         self.__static_dir=self.__upload_prex+datetime.datetime.now().strftime("%Y%m%d")+'/'
-        self.__upload_path=current_app.config['UPLOADED_PATH']+self.static_dir
+        self.__upload_path=current_app.config['UPLOADED_PATH']+self.__static_dir
         return self.__upload(file)
 
     # 上次不同类型的文件给予不同目录

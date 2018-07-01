@@ -45,4 +45,4 @@ def tag_edit(id):
             tag.name=form.name.data
             db.session.add(tag)
             flash('标签修改成功~','ok')
-    return render_template('admin/tag_edit',form=form,tag=tag,id=id)
+    return render_template('admin/tag_edit.html',form=form,tag=tag,id=id)

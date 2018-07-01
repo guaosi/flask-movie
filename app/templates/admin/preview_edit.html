@@ -4,7 +4,7 @@
             <h1>微电影管理系统</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 预告管理</a></li>
-                <li class="active">添加预告</li>
+                <li class="active">修改预告</li>
             </ol>
         </section>
         <section class="content" id="showcontent">
@@ -12,14 +12,14 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">添加预告</h3>
+                            <h3 class="box-title">修改预告</h3>
                         </div>
                         {% include 'admin/flash_msg.html' %}
                         <form role="form" method="POST" enctype="multipart/form-data">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_title">预告标题</label>
-                                    <input type="text" class="form-control" id="input_title" placeholder="请输入预告标题！" value="{{form.title.data|default('',True)}}" name="title">
+                                    <input type="text" class="form-control" id="input_title" placeholder="请输入预告标题！" value="{{preview.title|default('',True)}}" name="title">
                             {% for err in form.title.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label for="input_logo">预告封面</label>
                                     <input  name="logo" type="file" id="input_logo">
-                                    <img data-src="holder.js/700x320" style="margin-top:5px;" class="img-responsive"
+                                    <img src="{{url_for('static',filename=preview.logo)}}" data-src="holder.js/700x320" style="margin-top:5px;" class="img-responsive"
                                          alt="">
                             {% for err in form.logo.errors %}
                               <div class="col-md-12">
@@ -40,7 +40,7 @@
                             </div>
                             <div class="box-footer">
                                 {{form.csrf_token}}
-                                <button type="submit" class="btn btn-primary">添加</button>
+                                <button type="submit" class="btn btn-primary">修改</button>
                             </div>
                         </form>
                     </div>
