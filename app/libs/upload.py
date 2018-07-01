@@ -12,27 +12,34 @@ class Upload_file:
         return filename
     #上次不同类型的文件给予不同目录
     def image(self,file):
-        self.upload_path=current_app.config['UPLOADED_IMAGE_PATH']+datetime.datetime.now().strftime("%Y%m%d")+'/'
+        self.__upload_prex=current_app.config['UPLOADED_DIR']+'/image/'
+        self.__static_dir=self.__upload_prex+datetime.datetime.now().strftime("%Y%m%d")+'/'
+        self.__upload_path=current_app.config['UPLOADED_PATH']+self.static_dir
         return self.__upload(file)
 
     # 上次不同类型的文件给予不同目录
     def video(self,file):
-        self.upload_path = current_app.config['UPLOADED_VIDEO_PATH']+datetime.datetime.now().strftime("%Y%m%d")+'/'
+        self.__upload_prex = current_app.config['UPLOADED_DIR']+'/video/'
+        self.__static_dir=self.__upload_prex+datetime.datetime.now().strftime("%Y%m%d")+'/'
+        self.__upload_path = current_app.config['UPLOADED_PATH']+self.__static_dir
         return self.__upload(file)
     # 文件上传主要逻辑
     def __upload(self,file):
         # 安全验证文件名称
         file_secure_name=secure_filename(file.filename)
         # 判断上次文件夹是否存在，不存在则创建
-        if not os.path.exists(self.upload_path):
-            os.makedirs(self.upload_path)
-            os.chmod(self.upload_path,733)
+        if not os.path.exists(self.__upload_path):
+            os.makedirs(self.__upload_path)
+            os.chmod(self.__upload_path,733)
         # 将上次文件改名
         filename=self.__change_filename(file_secure_name)
-
+        # 用于保存文件，所以是绝对全路径
+        save_path=self.__upload_path+filename
+        # 用于返回，所以是相对路径
+        return_path=self.__static_dir+filename
         # 保存文件
         try:
-            file.save(self.upload_path+filename)
-            return filename
+            file.save(save_path)
+            return return_path
         except Exception as e:
             raise e

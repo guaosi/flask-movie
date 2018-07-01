@@ -6,4 +6,4 @@ from app.models.base import BaseModel
 class Tag(BaseModel):
     id=Column(Integer,primary_key=True,autoincrement=True) #编号
     name=Column(String(100),unique=True) #标题
-    tag=relationship('Movie',backref='tag')
+    movie=relationship('Movie',backref='tag')

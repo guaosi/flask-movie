@@ -34,4 +34,10 @@ class MovieAddForm(Movie):
     #     if movie:
     #         raise ValidationError('电影封面已存在')
 class MovieEditForm(Movie):
-    pass
+    # 这里让上次文件不是必须字段，然而格式验证还是需要的
+    url = FileField(validators=[FileAllowed(['mp4', 'avi', 'mkv'], '视频格式不正确')])
+    logo = FileField(validators=[FileAllowed(IMAGES, '图片格式不正确')])
+    def validate_title(self,field):
+        movie=MovieModel.query.filter(MovieModel.id!=self.id.data,MovieModel.title==field.data).first()
+        if movie:
+            raise ValidationError('电影标题已存在')

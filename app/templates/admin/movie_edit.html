@@ -4,7 +4,7 @@
             <h1>微电影管理系统</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 电影管理</a></li>
-                <li class="active">添加电影</li>
+                <li class="active">修改电影</li>
             </ol>
         </section>
         <section class="content" id="showcontent">
@@ -12,14 +12,14 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">添加电影</h3>
+                            <h3 class="box-title">修改电影</h3>
                         </div>
                         {% include 'admin/flash_msg.html' %}
                         <form role="form" method="post"  enctype="multipart/form-data">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_title">片名</label>
-                                    <input type="text" class="form-control" id="input_title" placeholder="请输入片名！" value="{{form.data['title']|default('',True)}}" name="title">
+                                    <input type="text" class="form-control" id="input_title" placeholder="请输入片名！" value="{{movie.title|default('',True)}}" name="title">
                             {% for err in form.title.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input_info">介绍</label>
-                                    <textarea  name="info" class="form-control" rows="10" id="input_info">{{form.data['info']|default('',True)}}</textarea>
+                                    <textarea  name="info" class="form-control" rows="10" id="input_info">{{movie.info|default('',True)}}</textarea>
                             {% for err in form.info.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label for="input_logo">封面</label>
                                     <input name="logo" type="file" id="input_logo" >
-                                    <img data-src="holder.js/262x166" style="margin-top:5px;" class="img-responsive"
+                                    <img src="{{url_for('static',filename=movie.logo)}}" data-src="holder.js/262x166" style="margin-top:5px;" class="img-responsive"
                                          alt="">
                              {% for err in form.logo.errors %}
                               <div class="col-md-12">
@@ -62,7 +62,7 @@
                                     <label for="input_star">星级</label>
                                     <select  name="star" class="form-control" id="input_star">
                                         {% for v in range(1,6) %}
-                                        {% if form.data['star'] == v %}
+                                        {% if movie.star == v %}
                                         <option value="{{v}}" selected="selected">{{v}}星</option>
                                         {% else %}
                                         <option value="{{v}}" >{{v}}星</option>
@@ -79,7 +79,7 @@
                                     <label for="input_tag_id">标签</label>
                                     <select   name="tag_id" class="form-control" id="input_tag_id">
                                         {% for tag in tags %}
-                                        {% if form.data['tag_id'] == tag.id %}
+                                        {% if movie.tag_id == tag.id %}
                                         <option selected value="{{tag.id}}">{{tag.name}}</option>
                                         {% else %}
                                          <option value="{{tag.id}}">{{tag.name}}</option>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input_area">地区</label>
-                                    <input   name="area" type="text" class="form-control" id="input_area" placeholder="请输入地区！" value="{{form.data['area']|default('',True)}}">
+                                    <input   name="area" type="text" class="form-control" id="input_area" placeholder="请输入地区！" value="{{movie.area|default('',True)}}">
                              {% for err in form.area.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input_length">片长</label>
-                                    <input  name="length" type="text" class="form-control" id="input_length" placeholder="请输入片长！" value="{{form.data['length']|default('',True)}}">
+                                    <input  name="length" type="text" class="form-control" id="input_length" placeholder="请输入片长！" value="{{movie.length|default('',True)}}">
                              {% for err in form.length.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -113,7 +113,7 @@
                                 <div class="form-group">
                                     <label for="input_release_time">上映时间</label>
                                     <input  name="release_time" type="text" class="form-control" id="input_release_time"
-                                           placeholder="请选择上映时间！" value="{{form.data['release_time']|default('',True)}}">
+                                           placeholder="请选择上映时间！" value="{{movie.release_time|default('',True)}}">
                               {% for err in form.release_time.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -123,7 +123,7 @@
                             </div>
                             <div class="box-footer">
                                 {{form.csrf_token}}
-                                <input value="添加" type="submit" class="btn btn-primary">
+                                <input value="修改" type="submit" class="btn btn-primary">
                             </div>
                         </form>
                     </div>
@@ -142,8 +142,8 @@
     jwplayer("moviecontainer").setup({
         flashplayer: "{{url_for('static',filename='jwplayer/jwplayer.flash.swf')}}",
         playlist: [{
-            file: "{{url_for('static',filename='video/htpy.mp4')}}",
-            title: "环太平洋"
+            file: "{{url_for('static',filename=movie.url)}}",
+            title: "{{movie.title}}"
         }],
         modes: [{
             type: "html5"
