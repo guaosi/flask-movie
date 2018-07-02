@@ -65,4 +65,5 @@ def preview_edit(id):
             db.session.add(preview)
             Oplog('修改预告:' + preview.name + ',id:' + str(preview.id))
             flash('预告修改成功~','ok')
+            return redirect(url_for('admin.preview_edit',id=id))
     return render_template('admin/preview_edit.html',preview=preview,form=form)

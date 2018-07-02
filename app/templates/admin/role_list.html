@@ -1,4 +1,5 @@
 {% extends  'admin/layout.html' %}
+{% import 'common/page.html' as pg %}
 {% block content %}
         <section class="content-header">
             <h1>微电影管理系统</h1>
@@ -26,6 +27,7 @@
                             </div>
                         </div>
                         <div class="box-body table-responsive no-padding">
+                        {% include 'admin/flash_msg.html' %}
                             <table class="table table-hover">
                                 <tbody>
                                 <tr>
@@ -34,15 +36,15 @@
                                     <th>添加时间</th>
                                     <th>操作事项</th>
                                 </tr>
-                                {% for v in range(1,11)%}
+                                 {% for role in roles.items  %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>xxx</td>
-                                    <td>2017-06-01</td>
+                                    <td>{{ role.id }}</td>
+                                    <td>{{ role.name }}</td>
+                                    <td>{{ role.addtime }}</td>
                                     <td>
-                                        <a class="label label-success">编辑</a>
+                                        <a href="{{ url_for('admin.role_edit',id=role.id) }}" class="label label-success">编辑</a>
                                         &nbsp;
-                                        <a class="label label-danger">删除</a>
+                                        <a href="{{ url_for('admin.role_del',id=role.id) }}" class="label label-danger">删除</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -50,15 +52,7 @@
                             </table>
                         </div>
                         <div class="box-footer clearfix">
-                            <ul class="pagination pagination-sm no-margin pull-right">
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li><a href="#">尾页</a></li>
-                            </ul>
+                            {{ pg.render_pagination(roles,'admin.role_list') }}
                         </div>
                     </div>
                 </div>

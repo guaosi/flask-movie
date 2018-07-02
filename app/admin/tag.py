@@ -18,7 +18,8 @@ def tag_add():
             tag.name=form.name.data
             db.session.add(tag)
             Oplog('添加标签:'+tag.name)
-        flash('添加标签成功~','ok')
+            flash('添加标签成功~','ok')
+            return redirect(url_for('admin.tag_add'))
     return render_template('admin/tag_add.html',form=form)
 @app.route('/tag/list/<int:page>')
 @admin_login_required
@@ -36,7 +37,7 @@ def tag_del(id):
         db.session.delete(tag)
         Oplog('删除标签:' + tag.name+',id:'+str(tag.id))
         flash('标签删除成功~','ok')
-    return redirect(url_for('admin.tag_list',page=1))
+        return redirect(url_for('admin.tag_list',page=1))
 
 @app.route('/tag/edit/<int:id>',methods=['GET','POST'])
 @admin_login_required
@@ -49,4 +50,5 @@ def tag_edit(id):
             db.session.add(tag)
             Oplog('修改标签:' + tag.name + ',id:' + str(tag.id))
             flash('标签修改成功~','ok')
+            return redirect(url_for('admin.tag_edit'),id=id)
     return render_template('admin/tag_edit.html',form=form,tag=tag,id=id)

@@ -11,7 +11,7 @@
             <h1>微电影管理系统</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 角色管理</a></li>
-                <li class="active">添加角色</li>
+                <li class="active">修改角色</li>
             </ol>
         </section>
         <section class="content" id="showcontent">
@@ -19,14 +19,14 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">添加角色</h3>
+                            <h3 class="box-title">修改角色</h3>
                         </div>
                         {% include 'admin/flash_msg.html' %}
                         <form role="form" method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_name">角色名称</label>
-                                    <input type="text" class="form-control" id="input_name" placeholder="请输入角色名称！"  name="name" value="{{form.data['name']|default('',True)}}">
+                                    <input type="text" class="form-control" id="input_name" placeholder="请输入角色名称！"  name="name" value="{{role.name|default('',True)}}">
                                      {% for err in form.name.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -39,11 +39,13 @@
                                     </div>
                                     <select name="auths" id="" multiple="multiple" class="form-control">
                                         {%  for auth in auths %}
-{#                                        {% if auth.id in form.auths.data %}#}
-{#                                        <option value="{{ auth.id }}" selected="selected">{{ auth.name }}</option>#}
-{#                                            {% else %}#}
+                                        {% if auth.id in role.auths %}
+                                            {{ auth.id }}
+                                            {{ role.auths    }}
+                                        <option value="{{ auth.id }}" selected="selected">{{ auth.name }}</option>
+                                            {% else %}
                                         <option value="{{ auth.id }}">{{ auth.name }}</option>
-{#                                            {% endif %}#}
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
 

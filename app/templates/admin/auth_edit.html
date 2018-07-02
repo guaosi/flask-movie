@@ -4,7 +4,7 @@
             <h1>微电影管理系统</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 权限管理</a></li>
-                <li class="active">添加权限</li>
+                <li class="active">修改权限</li>
             </ol>
         </section>
         <section class="content" id="showcontent">
@@ -12,14 +12,14 @@
                 <div class="col-md-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">添加权限</h3>
+                            <h3 class="box-title">修改权限</h3>
                         </div>
                         {% include 'admin/flash_msg.html' %}
                         <form role="form" method="POST">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_name">权限名称</label>
-                                    <input type="text" class="form-control" id="input_name" placeholder="请输入权限名称！" name="name" value="{{form.data['name']|default('',True)}}">
+                                    <input type="text" class="form-control" id="input_name" placeholder="请输入权限名称！" name="name" value="{{auth.name|default('',True)}}">
                            {% for err in form.name.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input_url">权限地址</label>
-                                    <input type="text" class="form-control" id="input_url" placeholder="请输入权限地址！" name="url" value="{{form.data['url']|default('',True)}}">
+                                    <input type="text" class="form-control" id="input_url" placeholder="请输入权限地址！" name="url" value="{{auth.url|default('',True)}}">
                             {% for err in form.url.errors %}
                               <div class="col-md-12">
                                 <span style="color:red">{{ err }}</span>
