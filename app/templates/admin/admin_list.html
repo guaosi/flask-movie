@@ -1,4 +1,5 @@
 {% extends  'admin/layout.html' %}
+{% import 'common/page.html' as pg %}
 {% block content %}
         <section class="content-header">
             <h1>微电影管理系统</h1>
@@ -35,28 +36,25 @@
                                     <th>管理员角色</th>
                                     <th>添加时间</th>
                                 </tr>
-                                {% for v in range(1,11) %}
+                                {% for admin in admins.items %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>jinlong</td>
+                                    <td>{{ admin.id }}</td>
+                                    <td>{{ admin.name }}</td>
+
+                                    {% if admin.is_super.value==1 %}
                                     <td>普通管理员</td>
-                                    <td>系统管理员</td>
-                                    <td>2017-06-01</td>
+                                    {% elif admin.is_super.value==0 %}
+                                    <td>超级管理员</td>
+                                    {% endif %}
+                                    <td>{{ admin.role.name }}</td>
+                                    <td>{{ admin.addtime }}</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                         <div class="box-footer clearfix">
-                            <ul class="pagination pagination-sm no-margin pull-right">
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li><a href="#">尾页</a></li>
-                            </ul>
+                            {{ pg.render_pagination(auths,'admin.auth_list') }}
                         </div>
                     </div>
                 </div>

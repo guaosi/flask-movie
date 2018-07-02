@@ -39,14 +39,9 @@
                                     </div>
                                     <select name="auths" id="" multiple="multiple" class="form-control">
                                         {%  for auth in auths %}
-{#                                        {% if auth.id in form.auths.data %}#}
-{#                                        <option value="{{ auth.id }}" selected="selected">{{ auth.name }}</option>#}
-{#                                            {% else %}#}
                                         <option value="{{ auth.id }}">{{ auth.name }}</option>
-{#                                            {% endif %}#}
                                         {% endfor %}
                                     </select>
-
                                 </div>
                                {% for err in form.auths.errors %}
                               <div class="col-md-12">

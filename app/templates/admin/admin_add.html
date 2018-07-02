@@ -14,30 +14,57 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">添加管理员</h3>
                         </div>
-                        <form role="form">
+                        {% include 'admin/flash_msg.html' %}
+                        <form role="form" method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_name">管理员名称</label>
-                                    <input type="text" class="form-control" id="input_name" placeholder="请输入管理员名称！">
+                                    <input type="text" class="form-control" id="input_name" placeholder="请输入管理员名称！"  name="name" value="{{form.data['name']|default('',True)}}">
+                                {% for err in form.name.errors %}
+                              <div class="col-md-12">
+                                <span style="color:red">{{ err }}</span>
+                             </div>
+                            {% endfor %}
                                 </div>
                                 <div class="form-group">
                                     <label for="input_pwd">管理员密码</label>
-                                    <input type="password" class="form-control" id="input_pwd" placeholder="请输入管理员密码！">
+                                    <input type="password" class="form-control" id="input_pwd" placeholder="请输入管理员密码！" name="pwd">
+                                {% for err in form.pwd.errors %}
+                              <div class="col-md-12">
+                                <span style="color:red">{{ err }}</span>
+                             </div>
+                            {% endfor %}
                                 </div>
                                 <div class="form-group">
                                     <label for="input_re_pwd">管理员重复密码</label>
                                     <input type="password" class="form-control" id="input_re_pwd"
-                                           placeholder="请输入管理员重复密码！">
+                                           placeholder="请输入管理员重复密码！" name="repwd">
+                                {% for err in form.repwd.errors %}
+                              <div class="col-md-12">
+                                <span style="color:red">{{ err }}</span>
+                             </div>
+                            {% endfor %}
                                 </div>
                                 <div class="form-group">
                                     <label for="input_role_id">所属角色</label>
-                                    <select class="form-control" id="input_role_id">
-                                        <option value="0">---请选择所属角色---</option>
-                                        <option value="1">xxx</option>
+                                    <select  name="role_id" class="form-control" id="input_role_id">
+                                    {% for role in roles %}
+                                        {%   if form.role_id.data==role.id %}
+                                        <option selected="selected" value="{{ role.id }}">{{ role.name }}</option>
+                                        {% else %}
+                                         <option value="{{ role.id }}">{{ role.name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
                                     </select>
+                               {% for err in form.role_id.errors %}
+                              <div class="col-md-12">
+                                <span style="color:red">{{ err }}</span>
+                             </div>
+                            {% endfor %}
                                 </div>
                             </div>
                             <div class="box-footer">
+                                {{ form.csrf_token }}
                                 <button type="submit" class="btn btn-primary">添加</button>
                             </div>
                         </form>
