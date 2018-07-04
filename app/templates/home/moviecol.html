@@ -27,12 +27,12 @@
                     {% for moviecol in moviecols.items %}
                     <div class="media">
                         <div class="media-left">
-                            <a href="{{url_for('home.play',id=moviecol.movie.id,page=1)}}">
+                            <a href="{{url_for('home.video',id=moviecol.movie.id,page=1)}}">
                                 <img class="media-object" width="83px" src="{{ url_for('static',filename=moviecol.movie.logo) }}" alt="{{ moviecol.movie.title }}">
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">{{ moviecol.movie.tiile }}<a href="{{url_for('home.play',id=moviecol.movie.id,page=1)}}" class="label label-primary pull-right"><span class="glyphicon glyphicon-play"></span>播放影片</a></h4>
+                            <h4 class="media-heading">{{ moviecol.movie.tiile }}<a href="{{url_for('home.video',id=moviecol.movie.id,page=1)}}" class="label label-primary pull-right"><span class="glyphicon glyphicon-play"></span>播放影片</a></h4>
                             {{ moviecol.movie.info }}
                         </div>
                     </div>
