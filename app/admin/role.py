@@ -42,8 +42,8 @@ def role_list(page=None):
 def role_del(id):
     role=Role.query.get_or_404(id)
     with db.auto_commit():
-        db.session.delete(role)
         Oplog('删除角色:' + role.name + ',id:' + str(role.id))
+        db.session.delete(role)
         flash('删除角色成功~','ok')
         return redirect(url_for('admin.role_list',page=1))
 @app.route('/role/edit/<int:id>',methods=['GET','POST'])

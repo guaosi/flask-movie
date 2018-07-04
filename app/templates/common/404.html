@@ -11,7 +11,7 @@
     <img class="rotating" src="{{url_for('static',filename='404/spaceman.svg')}}">
     <div class="pagenotfound-text">
         <h1>迷失在太空中！</h1>
-        <h2><a href="{{url_for('home.index')}}">返回首页</a></h2>
+        <h2><a href="{{url_for('home.index',page=1)}}">返回首页</a></h2>
     </div>
     <canvas id="canvas2d"></canvas>
 </div>

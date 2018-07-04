@@ -1,6 +1,6 @@
 from flask import render_template, current_app, redirect, url_for, flash
 from app import db
-from app.libs.login import admin_login_required
+from app.libs.login import admin_login_required,admin_auth
 from app.libs.redprint import RedPrint
 from app.models.oplog import Oplog
 from app.models.user import User
@@ -13,6 +13,7 @@ from app.models.movie import Movie
 app=RedPrint()
 @app.route('/user/list/<int:page>')
 @admin_login_required
+@admin_auth
 def user_list(page=None):
     if page is None:
         page=1
@@ -28,8 +29,8 @@ def user_view(id):
 def user_del(id):
     user=User.query.get_or_404(id)
     with db.auto_commit():
-        db.session.delete(user)
         Oplog('删除用户:' + user.name + ',id:' + str(user.id))
+        db.session.delete(user)
         flash('会员删除成功~','ok')
         return redirect(url_for('admin.user_list',page=1))
 

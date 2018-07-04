@@ -19,7 +19,7 @@ def comment_list(page=None):
 def comment_del(id):
     comment=Comment.query.get_or_404(id)
     with db.auto_commit():
-        db.session.delete(comment)
         Oplog('删除评论:' + comment.content + ',id:' + str(comment.id))
+        db.session.delete(comment)
         flash('评论删除成功~','ok')
         return redirect(url_for('admin.comment_list',page=1))

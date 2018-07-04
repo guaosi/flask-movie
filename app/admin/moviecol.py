@@ -19,7 +19,7 @@ def moviecol_list(page=None):
 def moviecol_del(id):
     moviecol=MovieCol.query.get_or_404(id)
     with db.auto_commit():
-        db.session.delete(moviecol)
         Oplog('删除电影收藏:' + moviecol.movie.title + ',id:' + str(moviecol.id))
+        db.session.delete(moviecol)
         flash('电影收藏删除成功~','ok')
         return redirect(url_for('admin.moviecol_list',page=1))

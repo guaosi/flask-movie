@@ -35,34 +35,37 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{url_for('home.index')}}" class="navbar-brand" style="width:250px;">
+            <a href="{{url_for('home.index',page=1)}}" class="navbar-brand" style="width:250px;">
                 <img src="{{url_for('static',filename='base/images/logo.png')}}" style="height:30px;">&nbsp;微电影
             </a>
         </div>
         <!--小屏幕导航按钮和logo-->
         <!--导航-->
         <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-left" role="search" style="margin-top:18px;">
+            <form class="navbar-form navbar-left" role="search" style="margin-top:18px;" method="get">
                 <div class="form-group input-group">
-                    <input type="text" class="form-control" placeholder="请输入电影名！">
+                    <input type="text" class="form-control" placeholder="请输入电影名！" id="search_key">
                     <span class="input-group-btn">
-                        <a class="btn btn-default" href="{{url_for('home.search')}}"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</a>
+                        <a id="search_btn" class="btn btn-default" href="javascript:;"><span class="glyphicon glyphicon-search"></span>&nbsp;搜索</a>
                     </span>
                 </div>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="curlink" href="{{url_for('home.index')}}"><span class="glyphicon glyphicon-film"></span>&nbsp;电影</a>
+                    <a class="curlink" href="{{url_for('home.index',page=1)}}"><span class="glyphicon glyphicon-film"></span>&nbsp;电影</a>
                 </li>
+                {% if not current_user.is_authenticated %}
                 <li>
                     <a class="curlink" href="{{url_for('home.login')}}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a>
                 </li>
                 <li>
                     <a class="curlink" href="{{url_for('home.register')}}"><span class="glyphicon glyphicon-plus"></span>&nbsp;注册</a>
                 </li>
+                {% else %}
                 <li>
                     <a class="curlink" href="{{url_for('home.logout')}}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                 </li>
+                {% endif %}
                 <li>
                     <a class="curlink" href="{{url_for('home.user')}}"><span class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
                 </li>
@@ -110,6 +113,10 @@
             effect: "fadeIn"
         });
     });
+    $('#search_btn').click(function(){
+        key=$('#search_key').val();
+        location.href="{{ url_for('home.search',page=1) }}?key="+key
+    })
 </script>
     {% block script %}
     {% endblock %}

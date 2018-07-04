@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash, session
 
 from app import db
-from app.libs.login import admin_login_required
+from app.libs.login import admin_login_required,admin_auth
 from app.libs.redprint import RedPrint
 from app.models.admin import Admin
 from app.models.role import Role
@@ -13,6 +13,7 @@ from app.validators.main import LoginForm, PwdForm
 app=RedPrint()
 @app.route('/')
 @admin_login_required
+@admin_auth
 def index():
     return render_template('admin/index.html')
 @app.route('/login',methods=['GET','POST'])

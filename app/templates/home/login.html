@@ -7,19 +7,29 @@
                     <h3 class="panel-title"><span class="glyphicon glyphicon-log-in"></span>&nbsp;会员登录</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    {% include 'home/flash_msg.html' %}
+                    <form role="form" method="post">
                         <fieldset>
                             <div class="form-group">
                                 <label for="input_contact"><span class="glyphicon glyphicon-user"></span>&nbsp;账号</label>
-                                <input id="input_contact" class="form-control input-lg" placeholder="用户名/邮箱/手机号码" name="contact" type="text" autofocus>
+                                <input id="input_contact" class="form-control input-lg" placeholder="用户名" name="name" type="text" autofocus  value="{{form.data['name']|default('',True)}}">
                             </div>
-                            <div class="col-md-12" id="error_contact"></div>
+                            {% for err in form.name.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
                             <div class="form-group">
                                 <label for="input_password"><span class="glyphicon glyphicon-lock"></span>&nbsp;密码</label>
-                                <input id="input_password" class="form-control input-lg" placeholder="密码" name="password" type="password" value="">
+                                <input id="input_password" class="form-control input-lg" placeholder="密码" name="pwd" type="password" value="">
                             </div>
-                            <div class="col-md-12" id="error_password"></div>
-                            <a href="user.html" class="btn btn-lg btn-success btn-block">登录</a>
+                            {% for err in form.pwd.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
+                            {{ form.csrf_token }}
+                             <button type="submit" class="btn btn-lg btn-success btn-block">登陆</button>
                         </fieldset>
                     </form>
                 </div>

@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, current_app, redirect, url_for
 
 from app import db
-from app.libs.login import admin_login_required
+from app.libs.login import admin_login_required,admin_auth
 from app.libs.redprint import RedPrint
 from app.models.oplog import Oplog
 from app.models.tag import Tag
@@ -10,6 +10,7 @@ from app.validators.tag import TagForm
 app=RedPrint()
 @app.route('/tag/add',methods=['GET','POST'])
 @admin_login_required
+@admin_auth
 def tag_add():
     form=TagForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -23,6 +24,7 @@ def tag_add():
     return render_template('admin/tag_add.html',form=form)
 @app.route('/tag/list/<int:page>')
 @admin_login_required
+@admin_auth
 def tag_list(page=None):
     if page is None:
         page=1
@@ -31,16 +33,18 @@ def tag_list(page=None):
 
 @app.route('/tag/del/<int:id>')
 @admin_login_required
+@admin_auth
 def tag_del(id):
     tag=Tag.query.get_or_404(id)
     with db.auto_commit():
+        Oplog('删除标签:' + tag.name + ',id:' + str(tag.id))
         db.session.delete(tag)
-        Oplog('删除标签:' + tag.name+',id:'+str(tag.id))
         flash('标签删除成功~','ok')
         return redirect(url_for('admin.tag_list',page=1))
 
 @app.route('/tag/edit/<int:id>',methods=['GET','POST'])
 @admin_login_required
+@admin_auth
 def tag_edit(id):
     tag=Tag.query.get_or_404(id)
     form=TagForm(request.form)

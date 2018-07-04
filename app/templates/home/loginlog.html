@@ -1,4 +1,5 @@
 {% extends 'home/layout.html' %}
+{% import 'common/home_page.html' as pg %}
 {% block css %}
     <style>
         .navbar-brand>img {
@@ -29,40 +30,22 @@
                         <td style="width:30%">登录IP</td>
                         <td style="width:30%">登录地址</td>
                     </tr>
+                    {% for log in loginlogs.items %}
                     <tr>
-                        <td>1</td>
-                        <td>2017-01-01 12:00:00</td>
-                        <td>192.168.4.1</td>
-                        <td>云南昆明</td>
+                        <td>{{ log.id }}</td>
+                        <td>{{ log.addtime }}</td>
+                        <td>{{ log.ip }}</td>
+                        <td>未知</td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2017-01-01 12:00:00</td>
-                        <td>192.168.4.1</td>
-                        <td>云南昆明</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2017-01-01 12:00:00</td>
-                        <td>192.168.4.1</td>
-                        <td>云南昆明</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2017-01-01 12:00:00</td>
-                        <td>192.168.4.1</td>
-                        <td>云南昆明</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2017-01-01 12:00:00</td>
-                        <td>192.168.4.1</td>
-                        <td>云南昆明</td>
-                    </tr>
+                    {% endfor %}
 
                 </table>
-            </div>
+                <div class="col-md-12 text-center" style="margin-top:6px;">
+                             {{ pg.render_pagination(loginlogs,'home.loginlog') }}
+                        </div>
         </div>
+            </div>
+
     </div>
 {% endblock %}
 {% block script %}

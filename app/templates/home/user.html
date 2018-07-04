@@ -22,36 +22,61 @@
                 <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;会员中心</h3>
             </div>
             <div class="panel-body">
-                <form role="form">
+            {% include 'home/flash_msg.html' %}
+                <form role="form" method="post" enctype="multipart/form-data">
                     <fieldset>
                             <div class="form-group">
                                 <label for="input_name"><span class="glyphicon glyphicon-user"></span>&nbsp;昵称</label>
-                                <input id="input_name" class="form-control" placeholder="昵称" name="name" type="text" autofocus value="jinlong">
+                                <input id="input_name" class="form-control" placeholder="昵称" name="name" type="text" autofocus value="{{user.name|default('',True)}}">
                             </div>
-                            <div class="col-md-12" id="error_name"></div>
+                           {% for err in form.name.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
                             <div class="form-group">
                                 <label for="input_email"><span class="glyphicon glyphicon-envelope"></span>&nbsp;邮箱</label>
-                                <input id="input_email" class="form-control" placeholder="邮箱" name="email" type="email" autofocus value="1780316635@qq.com">
+                                <input id="input_email" class="form-control" placeholder="邮箱" name="email" type="email" autofocus value="{{user.email|default('',True)}}">
                             </div>
-                            <div class="col-md-12" id="error_email"></div>
+                           {% for err in form.email.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
                             <div class="form-group">
                                 <label for="input_phone"><span class="glyphicon glyphicon-phone"></span>&nbsp;手机</label>
-                                <input id="input_phone" class="form-control" placeholder="手机" name="phone" type="text" autofocus value="13700632835">
+                                <input id="input_phone" class="form-control" placeholder="手机" name="phone" type="text" autofocus value="{{user.phone|default('',True)}}">
                             </div>
-                            <div class="col-md-12" id="error_phone"></div>
+                           {% for err in form.phone.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
                             <div class="form-group">
                                 <label for="input_face"><span class="glyphicon glyphicon-picture"></span>&nbsp;头像</label>
-                                <img src="holder.js/100x100" class="img-responsive img-rounded">
-                                <a class="btn btn-primary" style="margin-top:6px;"><span class="glyphicon glyphicon-open"></span>&nbsp;上传头像</a>
-                                <input id="input_face" class="form-control" name="face" type="hidden" autofocus>
+                                {% if user.face %}
+                                <img src="{{ url_for('static',filename=user.face) }}" class="img-responsive img-rounded">
+                                {% else %}
+                                  <img src="holder.js/100x100" class="img-responsive img-rounded">
+                                {% endif %}
+                                <input type="file" id="input_face" class="form-control" name="face" type="hidden" autofocus >
                             </div>
-                            <div class="col-md-12" id="error_face"></div>
+                           {% for err in form.face.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
                             <div class="form-group">
                                 <label for="input_info"><span class="glyphicon glyphicon-edit"></span>&nbsp;简介</label>
-                                <textarea class="form-control" rows="10" id="input_info">十年窗下无人问，一举成名天下知</textarea>
+                                <textarea class="form-control" rows="10" id="input_info" name="info">{{user.info|default('',True)}}</textarea>
                             </div>
-                            <div class="col-md-12" id="error_info"></div>
-                        <a href="user.html" class="btn btn-success"><span class="glyphicon glyphicon-saved"></span>&nbsp;保存修改</a>
+                           {% for err in form.info.errors %}
+                        <div class="col-md-12">
+                            <span style="color:red">{{ err }}</span>
+                        </div>
+                        {% endfor %}
+                            {{ form.csrf_token }}
+                             <button type="submit" class="btn btn-lg btn-success btn-block">修改</button>
                         </fieldset>
                 </form>
             </div>

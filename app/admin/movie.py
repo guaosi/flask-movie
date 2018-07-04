@@ -51,8 +51,8 @@ def movie_list(page=None):
 def movie_del(id):
     movie=Movie.query.get_or_404(id)
     with db.auto_commit():
-        db.session.delete(movie)
         Oplog('删除电影:' + movie.title + ',id:' + str(movie.id))
+        db.session.delete(movie)
         flash('电影成功删除~','ok')
         return redirect(url_for('admin.movie_list',page=1))
 

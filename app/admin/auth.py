@@ -35,8 +35,8 @@ def auth_list(page=None):
 def auth_del(id):
     auth=Auth.query.get_or_404(id)
     with db.auto_commit():
-        db.session.delete(auth)
         Oplog('删除权限:' + auth.name + ',id:' + str(auth.id))
+        db.session.delete(auth)
         flash('删除权限成功~','ok')
         return redirect(url_for('admin.auth_list',page=1))
 

@@ -41,8 +41,8 @@ def preview_list(page=None):
 def preview_del(id):
     preview=Preview.query.get_or_404(id)
     with db.auto_commit():
+        Oplog('删除预告:' + preview.title + ',id:' + str(preview.id))
         db.session.delete(preview)
-        Oplog('删除预告:' + preview.name + ',id:' + str(preview.id))
         flash('预告删除成功~','ok')
         return redirect(url_for('admin.preview_list',page=1))
 
@@ -63,7 +63,7 @@ def preview_edit(id):
         with db.auto_commit():
             preview.set_attr(data)
             db.session.add(preview)
-            Oplog('修改预告:' + preview.name + ',id:' + str(preview.id))
+            Oplog('修改预告:' + preview.title + ',id:' + str(preview.id))
             flash('预告修改成功~','ok')
             return redirect(url_for('admin.preview_edit',id=id))
     return render_template('admin/preview_edit.html',preview=preview,form=form)
