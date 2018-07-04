@@ -28,7 +28,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;电影介绍</h3>
                 </div>
-                <div class="panel-body" style="height:459px;">
+                <div class="panel-body" style="height:459px;overflow:scroll;">
                     <table class="table">
                         <tr>
                             <td style="width:30%;color:#ccc;font-weight:bold;font-style:italic;">
@@ -142,7 +142,11 @@
                         <li class="item cl">
                             <a href="#">
                                 <i class="avatar size-L radius">
+                                    {% if comment.user.face %}
                                     <img width="50px" alt="50x50" src="{{ url_for('static',filename=comment.user.face) }}" class="img-circle" style="border:1px solid #abcdef;">
+                                    {% else %}
+                                                                            <img alt="50x50" data-src="holder.js/50x50" class="img-circle" style="border:1px solid #abcdef;">
+                                    {% endif %}
                                 </i>
                             </a>
                             <div class="comment-main">

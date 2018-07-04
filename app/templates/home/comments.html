@@ -28,7 +28,11 @@
                         <li class="item cl">
                             <a href="#">
                                 <i class="avatar size-L radius">
+                                    {% if comment.user.face %}
                                     <img width="50px" alt="50x50" src="{{ url_for('static',filename=comment.user.face) }}" class="img-circle" style="border:1px solid #abcdef;">
+                                    {% else %}
+                                                                            <img alt="50x50" data-src="holder.js/50x50" class="img-circle" style="border:1px solid #abcdef;">
+                                    {% endif %}
                                 </i>
                             </a>
                             <div class="comment-main">

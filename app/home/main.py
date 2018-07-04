@@ -53,7 +53,7 @@ def search(page=None):
     if page is None:
         page=1
     key=request.args.get('key','')
-    movies=Movie.query.filter(Movie.title.like('%'+key+'%')).paginate(page,per_page=6)
+    movies=Movie.query.filter(Movie.title.like('%'+key+'%')).paginate(page,per_page=current_app.config['HOME_SEARCH_PAGE'])
     return render_template('home/search.html',movies=movies,key=key)
 @app.route('/play/<int:id>/<int:page>',methods=['GET','POST'])
 def play(id,page=None):
@@ -77,7 +77,7 @@ def play(id,page=None):
         flash('添加评论成功~', 'ok')
         thread=Thread(target=async_add_commentnum,args=[form.movie_id.data,app])
         thread.start()
-        return redirect(url_for('home.play', id=form.movie_id.data))
+        return redirect(url_for('home.play', id=form.movie_id.data,page=page))
     return render_template('home/play.html',movie=movie,form=form,comments=comments)
 
 @app.route('/moviecol',methods=['POST'])
