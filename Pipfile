@@ -10,7 +10,7 @@ cymysql = "*"
 flask-login = "*"
 flask-wtf = "*"
 flask-uploads = "*"
-
+flask-redis = "*"
 [dev-packages]
 
 [requires]
